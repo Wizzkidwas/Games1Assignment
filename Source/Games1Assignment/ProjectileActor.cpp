@@ -15,7 +15,7 @@ AProjectileActor::AProjectileActor()
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->MaxSpeed = MovementSpeed;
 	ProjectileMovement->InitialSpeed = MovementSpeed;
-	InitialLifeSpan = 10.0f;
+	InitialLifeSpan = 5.0f;
 
 }
 
@@ -23,7 +23,7 @@ AProjectileActor::AProjectileActor()
 void AProjectileActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	OnActorHit.AddDynamic(this, &AProjectileActor::OnHit);
 }
 
 // Called every frame
@@ -35,6 +35,9 @@ void AProjectileActor::Tick(float DeltaTime)
 
 void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Projectile Collision"));
+	if (OtherActor->GetClass()->IsChildOf(AActor::StaticClass()))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Projectile Collision"));
+	}
 }
 

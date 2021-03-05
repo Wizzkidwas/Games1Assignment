@@ -3,3 +3,7 @@
 
 #include "Games1AssignmentGameModeBase.h"
 
+void AGames1AssignmentGameModeBase::PointScored()
+{
+	
+}

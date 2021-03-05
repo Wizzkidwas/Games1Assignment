@@ -14,4 +14,7 @@ class GAMES1ASSIGNMENT_API AGames1AssignmentGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public:
+	UFUNCTION()
+		void PointScored();
 };
