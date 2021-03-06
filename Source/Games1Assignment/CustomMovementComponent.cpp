@@ -44,4 +44,5 @@ void UCustomMovementComponent::Fire()
 	FVector SpawnLocation = Character->ProjectileSpawnPoint->GetComponentLocation();
 	FRotator SpawnRotation = Character->ProjectileSpawnPoint->GetComponentRotation();
 	AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(Character->ProjectileClass, SpawnLocation, SpawnRotation);
+	TempProjectile->SetOwner(Character);
 }

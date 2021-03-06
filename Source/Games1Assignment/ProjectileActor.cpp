@@ -2,6 +2,7 @@
 
 
 #include "ProjectileActor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AProjectileActor::AProjectileActor()
@@ -38,6 +39,13 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 	if (OtherActor->GetClass()->IsChildOf(AActor::StaticClass()))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Projectile Collision"));
+		AActor* ProjectileOwner = GetOwner();
+		if (ProjectileOwner == NULL)
+		{
+			return;
+		}
+		UGameplayStatics::ApplyDamage(OtherActor, ProjectileDamage, ProjectileOwner->GetInstigatorController(),  this, UDamageType::StaticClass());
+		Destroy();
 	}
 }
 

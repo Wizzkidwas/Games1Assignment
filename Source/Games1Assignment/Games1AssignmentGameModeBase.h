@@ -17,4 +17,18 @@ class GAMES1ASSIGNMENT_API AGames1AssignmentGameModeBase : public AGameModeBase
 public:
 	UFUNCTION()
 		void PointScored();
+
+protected:
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+private:
+	UFUNCTION()
+		void StartGame();
+
+	UFUNCTION()
+		void GameOver(bool a);
+
+	UFUNCTION()
+		void LevelComplete();
 };

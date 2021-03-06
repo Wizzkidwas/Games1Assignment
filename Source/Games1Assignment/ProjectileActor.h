@@ -40,4 +40,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float MovementSpeed = 1000.0f;
+
+	UPROPERTY(EditAnywhere)
+		float ProjectileDamage = 10.0f;
+
 };

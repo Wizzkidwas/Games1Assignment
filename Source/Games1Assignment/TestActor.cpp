@@ -2,6 +2,7 @@
 
 
 #include "TestActor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATestActor::ATestActor()
@@ -23,6 +24,18 @@ void ATestActor::BeginPlay()
 	Super::BeginPlay();
 	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ATestActor::OnOverlapBegin);
 	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ATestActor::OnOverlapEnd);
+	GameModeRef = Cast<AGames1AssignmentGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+}
+
+float ATestActor::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Damage Taken"));
+	ActorHealth -= DamageAmount;
+	if (ActorHealth <= 0)
+	{
+		Destroy();
+	}
+	return DamageAmount;
 }
 
 // Called every frame
@@ -35,6 +48,7 @@ void ATestActor::Tick(float DeltaTime)
 void ATestActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Overlap begin"));
+	GameModeRef->PointScored();
 }
 
 void ATestActor::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
