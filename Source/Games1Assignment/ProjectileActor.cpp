@@ -10,7 +10,7 @@ AProjectileActor::AProjectileActor()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	ProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
-	ProjectileMesh->SetupAttachment(RootComponent);
+	SetRootComponent(ProjectileMesh);
 	ProjectileMesh->SetSimulatePhysics(true);
 	ProjectileMesh->SetNotifyRigidBodyCollision(true);
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
@@ -44,8 +44,11 @@ void AProjectileActor::OnHit(AActor* SelfActor, AActor* OtherActor, FVector Norm
 		{
 			return;
 		}
-		UGameplayStatics::ApplyDamage(OtherActor, ProjectileDamage, ProjectileOwner->GetInstigatorController(),  this, UDamageType::StaticClass());
-		Destroy();
+		if (ProjectileOwner != OtherActor)
+		{
+			UGameplayStatics::ApplyDamage(OtherActor, ProjectileDamage, ProjectileOwner->GetInstigatorController(),  this, UDamageType::StaticClass());
+			Destroy();
+		}
 	}
 }
 

@@ -3,6 +3,7 @@
 
 #include "CustomMovementComponent.h"
 #include "PlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UCustomMovementComponent::UCustomMovementComponent()
@@ -45,4 +46,5 @@ void UCustomMovementComponent::Fire()
 	FRotator SpawnRotation = Character->ProjectileSpawnPoint->GetComponentRotation();
 	AProjectileActor* TempProjectile = GetWorld()->SpawnActor<AProjectileActor>(Character->ProjectileClass, SpawnLocation, SpawnRotation);
 	TempProjectile->SetOwner(Character);
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), Character->FireSound, SpawnLocation);
 }

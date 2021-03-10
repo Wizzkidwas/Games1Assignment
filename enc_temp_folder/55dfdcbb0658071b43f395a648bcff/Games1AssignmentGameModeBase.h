@@ -21,4 +21,8 @@ protected:
 private:
 	UFUNCTION()
 		void StartGame();
+
+public:
+	UFUNCTION()
+		void LevelComplete(int PointsScored);
 };

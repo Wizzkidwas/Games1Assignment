@@ -38,9 +38,15 @@ public:
 		TSubclassOf<AProjectileActor> ProjectileClass;
 
 	UPROPERTY(EditAnywhere)
+		AGames1AssignmentGameModeBase* GameModeRef;
+
+	UPROPERTY(EditAnywhere)
 		USoundBase* FireSound;
 
 private:
+	UFUNCTION()
+		void CheckForNextLevel();
+
 	UPROPERTY(EditAnywhere)
 		USkeletalMeshComponent* CharacterMesh;
 
@@ -52,4 +58,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float PlayerHealth = 10.0f;
+
+	int Points;
 };

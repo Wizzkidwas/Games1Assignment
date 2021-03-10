@@ -24,7 +24,4 @@ private:
 		float MoveSpeed = 100.0f;
 	UPROPERTY(EditAnywhere)
 		float RotationSpeed = 500.0f;
-
-
-		
 };

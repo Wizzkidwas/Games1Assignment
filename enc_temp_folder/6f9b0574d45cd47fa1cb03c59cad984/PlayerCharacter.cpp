@@ -22,6 +22,8 @@ APlayerCharacter::APlayerCharacter()
 	PlayerMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Player Movement"));
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	ProjectileSpawnPoint->SetupAttachment(CharacterMesh);
+	GameModeRef = Cast<AGames1AssignmentGameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
+	Points = 0;
 }
 
 float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) 
@@ -30,6 +32,13 @@ float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const
 	if (PlayerHealth <= 0)
 	{
 		Destroy();
+		Points += 1;
+		CheckForNextLevel();
 	}
 	return DamageAmount;
+}
+
+void APlayerCharacter::CheckForNextLevel()
+{
+	GameModeRef->LevelComplete(Points);
 }
